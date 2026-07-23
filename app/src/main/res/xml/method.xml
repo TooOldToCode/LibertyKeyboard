@@ -1,0 +1,23 @@
+<input-method xmlns:android="http://schemas.android.com/apk/res/android"
+    android:settingsActivity="pl.pf.libertykeyboard.MainActivity">
+    <subtype android:imeSubtypeLocale="pl_PL" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="de_DE" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="en_US" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="fr_FR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="es_ES" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="pt_PT" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="it_IT" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="nl_NL" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="cs_CZ" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="sk_SK" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="tr_TR" android:imeSubtypeMode="keyboard" android:isAsciiCapable="true" />
+    <subtype android:imeSubtypeLocale="ru_RU" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="uk_UA" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="be_BY" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="bg_BG" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="sr_RS" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="el_GR" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="ar" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="fa_IR" android:imeSubtypeMode="keyboard" />
+    <subtype android:imeSubtypeLocale="he_IL" android:imeSubtypeMode="keyboard" />
+</input-method>

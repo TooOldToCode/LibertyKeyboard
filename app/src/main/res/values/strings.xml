@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Liberty Keyboard</string>
+    <string name="ime_name">Liberty Keyboard</string>
+    <string name="accessibility_name">Liberty Keyboard — preview decrypted text</string>
+</resources>
