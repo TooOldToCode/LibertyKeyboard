@@ -93,8 +93,4 @@ The political references used throughout this description are expressions of the
 
 Satire has always been part of free societies. It is a legitimate way to question authority, criticize public policy, and participate in democratic debate.
 
-**Hands off our private correspondence.
-
-Hands off freedom of speech.
-
-Hands off democracy.**
+**Hands off our private correspondence. Hands off freedom of speech. Hands off democracy.**
