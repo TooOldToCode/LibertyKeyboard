@@ -29,19 +29,28 @@ Java powinna zgłosić wersję 17.
 
 ### 2. Zainstaluj Android SDK Command-line Tools
 
+Otwórz [oficjalną stronę Androida](https://developer.android.com/studio#command-tools),
+pobierz najnowszą paczkę **Command line tools only** dla Windowsa i pozostaw ją
+w folderze `Pobrane` (`Downloads`). Adres tej strony jest stały, natomiast
+wersjonowana nazwa pliku ZIP zmienia się wraz z kolejnymi wydaniami.
+
 ```powershell
 $Sdk = "$env:LOCALAPPDATA\Android\Sdk"
 $Work = Join-Path $env:TEMP ("android-cli-" + [guid]::NewGuid())
-$Archive = Join-Path $Work "command-line-tools.zip"
+
+$Archive = Get-ChildItem `
+  "$HOME\Downloads\commandlinetools-win-*_latest.zip" |
+  Sort-Object LastWriteTime |
+  Select-Object -Last 1
+
+if (-not $Archive) {
+    throw "Nie znaleziono Command-line Tools w folderze Downloads."
+}
 
 New-Item -ItemType Directory -Force $Work | Out-Null
 New-Item -ItemType Directory -Force "$Sdk\cmdline-tools" | Out-Null
 
-Invoke-WebRequest `
-  "https://dl.google.com/android/repository/commandlinetools-win-15859902_latest.zip" `
-  -OutFile $Archive
-
-Expand-Archive $Archive -DestinationPath $Work
+Expand-Archive $Archive.FullName -DestinationPath $Work
 Move-Item "$Work\cmdline-tools" "$Sdk\cmdline-tools\latest"
 
 [Environment]::SetEnvironmentVariable("ANDROID_HOME", $Sdk, "User")
@@ -58,12 +67,6 @@ $SdkManager = "$Sdk\cmdline-tools\latest\bin\sdkmanager.bat"
 ```
 
 Odpowiadaj `y` na pytania dotyczące licencji.
-
-Aktualna wersja Command-line Tools jest dostępna na
-[oficjalnej stronie Androida](https://developer.android.com/studio#command-tools).
-Jeżeli podany wyżej adres paczki przestanie działać, pobierz stamtąd najnowszą
-wersję dla Windowsa i rozpakuj jej zawartość do
-`%LOCALAPPDATA%\Android\Sdk\cmdline-tools\latest`.
 
 ### 3. Pobierz i zbuduj projekt
 
@@ -94,20 +97,35 @@ włączeniu debugowania USB:
 
 ```bash
 sudo apt update
-sudo apt install openjdk-17-jdk git unzip wget
+sudo apt install openjdk-17-jdk git unzip
 java -version
 ```
 
 ### 2. Zainstaluj Android SDK Command-line Tools
 
+Otwórz [oficjalną stronę Androida](https://developer.android.com/studio#command-tools),
+pobierz najnowszą paczkę **Command line tools only** dla Linuxa i pozostaw ją
+w katalogu `Pobrane` (`Downloads`).
+
 ```bash
 export ANDROID_HOME="$HOME/Android/Sdk"
 android_cli_tmp="$(mktemp -d)"
+android_cli_archive="$(
+  find "$HOME/Downloads" -maxdepth 1 -type f \
+    -name 'commandlinetools-linux-*_latest.zip' \
+    -printf '%T@ %p\n' |
+  sort -nr |
+  head -n 1 |
+  cut -d ' ' -f 2-
+)"
+
+if [ -z "$android_cli_archive" ]; then
+  echo "Nie znaleziono Command-line Tools w katalogu Downloads." >&2
+  exit 1
+fi
 
 mkdir -p "$ANDROID_HOME/cmdline-tools"
-wget -O "$android_cli_tmp/command-line-tools.zip" \
-  "https://dl.google.com/android/repository/commandlinetools-linux-15859902_latest.zip"
-unzip "$android_cli_tmp/command-line-tools.zip" -d "$android_cli_tmp"
+unzip "$android_cli_archive" -d "$android_cli_tmp"
 mv "$android_cli_tmp/cmdline-tools" "$ANDROID_HOME/cmdline-tools/latest"
 
 export PATH="$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools"
