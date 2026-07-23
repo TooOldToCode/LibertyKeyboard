@@ -11,11 +11,11 @@ You can build the APK without installing Android Studio.
 
 Privacy begins with the first keystroke.
 
-Liberty Keyboard is an Android keyboard that lets you encrypt your message before it ever reaches your messaging app. It works with virtually any messenger, so you can keep using the apps you already trust while adding an extra layer of privacy where it matters most: at the point of creation.
+**Liberty Keyboard** is an Android keyboard that lets you encrypt your message before it ever reaches your messaging app. It works with virtually any messenger, so you can keep using the apps you already trust while adding an extra layer of privacy where it matters most: at the point of creation.
 
 Because privacy doesn't begin when you press Send. It begins long before that.
 
-Why Liberty Keyboard Exists
+**Why Liberty Keyboard Exists**
 
 What comes next?
 
@@ -75,7 +75,7 @@ This application does not claim to provide perfect security—no honest security
 
 What it does provide is an additional layer of privacy before your words leave the keyboard. And I believe that any meaningful protection is better than leaving every message completely exposed to automated scanning, profiling, and algorithmic analysis.
 
-A Personal Message
+**A Personal Message**
 
 If you are reading this, thank you.
 
@@ -87,14 +87,14 @@ Not because we have something to hide.
 
 Because human dignity requires a space where thoughts may exist before they become public.
 
-PS
+**PS**
 
 The political references used throughout this description are expressions of the author's personal views and are intended as satire and social commentary. They should not be interpreted as statements of fact or as attacks on any individual or institution.
 
 Satire has always been part of free societies. It is a legitimate way to question authority, criticize public policy, and participate in democratic debate.
 
-Hands off our private correspondence.
+**Hands off our private correspondence.
 
 Hands off freedom of speech.
 
-Hands off democracy.
+Hands off democracy.**
