@@ -2,14 +2,14 @@
 
 🇬🇧 English version: [README.md](README.md)
 
+**Liberty Keyboard** to klawiatura umożliwiająca ręczne szyfrowanie wiadomości jeszcze przed ich wysłaniem. Działa z dowolnym komunikatorem – nie wymaga zmiany aplikacji, z której już korzystasz. Prywatność zaczyna się jeszcze przed naciśnięciem przycisku „Wyślij”.
+
 ## Samodzielne budowanie APK
 
 APK można zbudować bez instalowania Android Studio.
 
 - [Instrukcja dla Windowsa i Linuxa](BUILDING.pl.md)
 - [Build instructions in English](BUILDING.md)
-
-**Liberty Keyboard** to klawiatura umożliwiająca ręczne szyfrowanie wiadomości jeszcze przed ich wysłaniem. Działa z dowolnym komunikatorem – nie wymaga zmiany aplikacji, z której już korzystasz. Prywatność zaczyna się jeszcze przed naciśnięciem przycisku „Wyślij”.
 
 **Dlaczego powstała Liberty Keyboard?**
 
