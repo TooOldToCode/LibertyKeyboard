@@ -2,18 +2,18 @@
 
 🇵🇱 Polish version: [README.pl.md](README.pl.md)
 
+Privacy begins with the first keystroke.
+
+**Liberty Keyboard** is an Android keyboard that lets you encrypt your message before it ever reaches your messaging app. It works with virtually any messenger, so you can keep using the apps you already trust while adding an extra layer of privacy where it matters most: at the point of creation.
+
+Because privacy doesn't begin when you press Send. It begins long before that.
+
 ## Build it yourself
 
 You can build the APK without installing Android Studio.
 
 - [Build instructions for Windows and Linux](BUILDING.md)
 - [Instrukcja budowania po polsku](BUILDING.pl.md)
-
-Privacy begins with the first keystroke.
-
-**Liberty Keyboard** is an Android keyboard that lets you encrypt your message before it ever reaches your messaging app. It works with virtually any messenger, so you can keep using the apps you already trust while adding an extra layer of privacy where it matters most: at the point of creation.
-
-Because privacy doesn't begin when you press Send. It begins long before that.
 
 **Why Liberty Keyboard Exists**
 
