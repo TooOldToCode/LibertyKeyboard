@@ -8,6 +8,20 @@ Privacy begins with the first keystroke.
 
 Because privacy doesn't begin when you press Send. It begins long before that.
 
+## Download
+
+[Download Liberty Keyboard 1.0.0 (signed APK)](releases/LibertyKeyboard-1.0.0.apk?raw=1)
+
+APK SHA-256:
+`2692a32398748748ce616e06ea575ae2f1867d4ab76edf653c73151bf7078c3b`
+
+Signing certificate SHA-256:
+`c37024bf7ebda04ea9f8a1ecba99f885445e4330638ac9b273acf3f7b20f07f8`
+
+The APK is signed by `CN=TooOldToCode, OU=Liberty Keyboard, C=PL`. Verify the
+certificate fingerprint before installation or update. The checksum is also
+available as a [separate file](releases/LibertyKeyboard-1.0.0.apk.sha256).
+
 ## Build it yourself
 
 You can build the APK without installing Android Studio.

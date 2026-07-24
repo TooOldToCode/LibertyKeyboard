@@ -4,6 +4,20 @@
 
 **Liberty Keyboard** to klawiatura umożliwiająca ręczne szyfrowanie wiadomości jeszcze przed ich wysłaniem. Działa z dowolnym komunikatorem – nie wymaga zmiany aplikacji, z której już korzystasz. Prywatność zaczyna się jeszcze przed naciśnięciem przycisku „Wyślij”.
 
+## Pobieranie
+
+[Pobierz Liberty Keyboard 1.0.0 (podpisany APK)](releases/LibertyKeyboard-1.0.0.apk?raw=1)
+
+SHA-256 pliku APK:
+`2692a32398748748ce616e06ea575ae2f1867d4ab76edf653c73151bf7078c3b`
+
+SHA-256 certyfikatu podpisującego:
+`c37024bf7ebda04ea9f8a1ecba99f885445e4330638ac9b273acf3f7b20f07f8`
+
+APK jest podpisany przez `CN=TooOldToCode, OU=Liberty Keyboard, C=PL`. Przed
+instalacją lub aktualizacją sprawdź odcisk certyfikatu. Suma kontrolna jest
+również dostępna w [osobnym pliku](releases/LibertyKeyboard-1.0.0.apk.sha256).
+
 ## Samodzielne budowanie APK
 
 APK można zbudować bez instalowania Android Studio.
