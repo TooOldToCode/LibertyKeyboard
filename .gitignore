@@ -7,6 +7,7 @@ local.properties
 *.keystore
 *.apk
 *.aab
+*.idsig
 captures/
 .DS_Store
 /ikona/

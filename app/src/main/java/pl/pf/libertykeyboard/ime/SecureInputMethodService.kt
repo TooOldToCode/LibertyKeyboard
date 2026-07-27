@@ -54,18 +54,11 @@ class SecureInputMethodService : InputMethodService() {
     }
     private var enteringPassword = false
     private var passwordBuffer = CharArray(0)
-    private var editorConnection: InputConnection? = null
     private var layer = KeyboardLayer.LETTERS
     private var shifted = false
 
-    override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
-        super.onStartInput(attribute, restarting)
-        editorConnection = currentInputConnection
-    }
-
     override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
         super.onStartInputView(info, restarting)
-        editorConnection = currentInputConnection
         DecryptedMessageHistory.addListener(historyListener)
         historyIndex = DecryptedMessageHistory.size() - 1
         refreshHistoryPanel()
@@ -74,7 +67,6 @@ class SecureInputMethodService : InputMethodService() {
     override fun onFinishInput() {
         DecryptedMessageHistory.removeListener(historyListener)
         if (::historyBody.isInitialized) historyBody.text = ""
-        editorConnection = null
         super.onFinishInput()
     }
 
@@ -99,14 +91,14 @@ class SecureInputMethodService : InputMethodService() {
             styleToolButton(it)
             it.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_encryption_off, 0, 0, 0)
             it.compoundDrawablePadding = dp(4)
-            tools.addView(it, LinearLayout.LayoutParams(0, dp(48), 2f))
+            tools.addView(it, LinearLayout.LayoutParams(0, dp(48), 1f))
         }
         tools.addView(
             iconTextTool(R.drawable.ic_manual_decrypt, "ODSZYFRUJ", "Odszyfruj zaznaczenie lub schowek") { decryptSelectionOrClipboard() },
             LinearLayout.LayoutParams(0, dp(48), 1f)
         )
         tools.addView(
-            iconTextTool(R.drawable.ic_password_clear, "USUŃ\nHASŁO", "Wyczyść hasło sesji") { clearSession() },
+            iconTextTool(R.drawable.ic_password_clear, "USUŃ", "Wyczyść hasło sesji") { clearSession() },
             LinearLayout.LayoutParams(0, dp(48), 1f)
         )
         root.addView(tools)
@@ -232,9 +224,9 @@ class SecureInputMethodService : InputMethodService() {
     private fun currentLanguage(): String {
         val subtype = (getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager)
             .currentInputMethodSubtype
-        return subtype?.locale
-            ?.takeIf { it.isNotBlank() }
-            ?.let { Locale.forLanguageTag(it.replace('_', '-')).language }
+        return subtype?.languageTag
+            ?.takeIf(String::isNotBlank)
+            ?.let { Locale.forLanguageTag(it).language }
             ?: Locale.getDefault().language
     }
 
@@ -381,10 +373,13 @@ class SecureInputMethodService : InputMethodService() {
             val location = IntArray(2).also { getLocationOnScreen(it) }
             popupX = (location[0] + this.width / 2 - width / 2)
                 .coerceIn(0, resources.displayMetrics.widthPixels - width)
-            val popupY = (location[1] - dp(54)).coerceAtLeast(0)
+            val xOffset = popupX - location[0]
+            val yOffset = -(this.height + dp(52))
             variantsPopup = PopupWindow(strip, width, dp(52), false).also {
                 it.isClippingEnabled = false
-                it.showAtLocation(root, Gravity.NO_GRAVITY, popupX, popupY)
+                it.inputMethodMode = PopupWindow.INPUT_METHOD_NOT_NEEDED
+                it.elevation = dp(6).toFloat()
+                it.showAsDropDown(this, xOffset, yOffset, Gravity.START)
             }
             selectVariant(location[0] + this.width / 2f)
         }
@@ -520,13 +515,16 @@ class SecureInputMethodService : InputMethodService() {
     }
 
     private fun submitEncryptedMessage(connection: InputConnection) {
+        connection.finishComposingText()
+
         val action = currentInputEditorInfo?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)
             ?: EditorInfo.IME_ACTION_UNSPECIFIED
+        // NEXT can move focus away from the editor. Other explicit actions are
+        // safe to pass back to the application exactly as it advertised them.
         val handled = when (action) {
             EditorInfo.IME_ACTION_SEND,
             EditorInfo.IME_ACTION_DONE,
-            EditorInfo.IME_ACTION_GO,
-            EditorInfo.IME_ACTION_NEXT -> connection.performEditorAction(action)
+            EditorInfo.IME_ACTION_GO -> connection.performEditorAction(action)
             else -> false
         }
         if (!handled) {
@@ -666,7 +664,12 @@ class SecureInputMethodService : InputMethodService() {
         )
         status.setTextColor(if (SecretSession.isEnabled()) Color.rgb(0, 110, 60) else Color.DKGRAY)
     }
-    private fun activeInputConnection() = currentInputConnection ?: editorConnection
+    /**
+     * InputConnection belongs to the currently focused editor and must not be cached.
+     * Applications often replace their text field after sending a message; retaining
+     * the old connection makes key presses appear to work while their text is dropped.
+     */
+    private fun activeInputConnection() = currentInputConnection
     private fun toast(text: String) = Toast.makeText(this, text, Toast.LENGTH_LONG).show()
     private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
     companion object {

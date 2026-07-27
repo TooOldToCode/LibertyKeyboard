@@ -50,8 +50,9 @@ object CryptoEngine {
             if (packet.size < SALT_SIZE + MIN_CIPHERTEXT_SIZE) return null
             val salt = packet.copyOfRange(0, SALT_SIZE)
             try { key = deriveKey(password, salt) } finally { salt.fill(0) }
-            decrypted = AesGcmJce(key).decrypt(packet.copyOfRange(SALT_SIZE, packet.size), null)
-            return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(decrypted)).toString().toCharArray()
+            val decryptedBytes = AesGcmJce(key).decrypt(packet.copyOfRange(SALT_SIZE, packet.size), null)
+            decrypted = decryptedBytes
+            return StandardCharsets.UTF_8.decode(ByteBuffer.wrap(decryptedBytes)).toString().toCharArray()
         } catch (_: Exception) {
             return null // wrong secret or untrusted, malformed input
         } finally {

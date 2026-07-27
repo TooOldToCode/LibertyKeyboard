@@ -10,32 +10,82 @@ internal data class LanguageLayout(
 internal object LanguageLayouts {
     private fun rows(vararg rows: String) = rows.map { row -> row.map(Char::toString) }
 
-    private val latinVariants = mapOf(
-        "a" to listOf("á", "à", "â", "ä", "æ", "ã", "å", "ā", "ă", "ą"),
-        "c" to listOf("ç", "ć", "č", "ĉ", "ċ"),
-        "d" to listOf("ď", "đ", "ð"), "e" to listOf("é", "è", "ê", "ë", "ę", "ė", "ē", "ě"),
-        "g" to listOf("ğ", "ģ", "ĝ", "ġ"), "i" to listOf("í", "ì", "î", "ï", "ī", "į", "ı"),
-        "l" to listOf("ł", "ľ", "ĺ"), "n" to listOf("ñ", "ń", "ň", "ņ"),
-        "o" to listOf("ó", "ò", "ô", "ö", "œ", "ø", "õ", "ō", "ő"),
-        "r" to listOf("ř", "ŕ", "ŗ"), "s" to listOf("ś", "š", "ş", "ș", "ß"),
-        "t" to listOf("ť", "ţ", "ț", "þ"), "u" to listOf("ú", "ù", "û", "ü", "ū", "ů", "ű", "ų"),
-        "y" to listOf("ý", "ÿ", "ŷ"), "z" to listOf("ź", "ż", "ž")
+    private val polishVariants = mapOf(
+        "a" to listOf("ą"), "c" to listOf("ć"), "e" to listOf("ę"),
+        "l" to listOf("ł"), "n" to listOf("ń"), "o" to listOf("ó"),
+        "s" to listOf("ś"), "z" to listOf("ź", "ż")
     )
 
-    private fun latin(order: Array<String> = arrayOf("qwertyuiop", "asdfghjkl", "zxcvbnm"), label: String) =
-        LanguageLayout(rows(*order), latinVariants, label)
+    private val germanVariants = mapOf(
+        "a" to listOf("ä"), "o" to listOf("ö"),
+        "u" to listOf("ü"), "s" to listOf("ß")
+    )
+
+    private val frenchVariants = mapOf(
+        "a" to listOf("à", "â", "æ"), "c" to listOf("ç"),
+        "e" to listOf("é", "è", "ê", "ë"), "i" to listOf("î", "ï"),
+        "o" to listOf("ô", "œ"), "u" to listOf("ù", "û", "ü"),
+        "y" to listOf("ÿ")
+    )
+
+    private val spanishVariants = mapOf(
+        "a" to listOf("á"), "e" to listOf("é"), "i" to listOf("í"),
+        "n" to listOf("ñ"), "o" to listOf("ó"), "u" to listOf("ú", "ü")
+    )
+
+    private val portugueseVariants = mapOf(
+        "a" to listOf("á", "à", "â", "ã"), "c" to listOf("ç"),
+        "e" to listOf("é", "ê"), "i" to listOf("í"),
+        "o" to listOf("ó", "ô", "õ"), "u" to listOf("ú")
+    )
+
+    private val italianVariants = mapOf(
+        "a" to listOf("à"), "e" to listOf("è", "é"),
+        "i" to listOf("ì"), "o" to listOf("ò"), "u" to listOf("ù")
+    )
+
+    private val dutchVariants = mapOf(
+        "e" to listOf("é", "è", "ê", "ë"), "i" to listOf("ï"),
+        "o" to listOf("ö"), "u" to listOf("ü")
+    )
+
+    private val czechVariants = mapOf(
+        "a" to listOf("á"), "c" to listOf("č"), "d" to listOf("ď"),
+        "e" to listOf("é", "ě"), "i" to listOf("í"), "n" to listOf("ň"),
+        "o" to listOf("ó"), "r" to listOf("ř"), "s" to listOf("š"),
+        "t" to listOf("ť"), "u" to listOf("ú", "ů"), "y" to listOf("ý"),
+        "z" to listOf("ž")
+    )
+
+    private val slovakVariants = mapOf(
+        "a" to listOf("á", "ä"), "c" to listOf("č"), "d" to listOf("ď"),
+        "e" to listOf("é"), "i" to listOf("í"), "l" to listOf("ĺ", "ľ"),
+        "n" to listOf("ň"), "o" to listOf("ó", "ô"), "r" to listOf("ŕ"),
+        "s" to listOf("š"), "t" to listOf("ť"), "u" to listOf("ú"),
+        "y" to listOf("ý"), "z" to listOf("ž")
+    )
+
+    private val turkishVariants = mapOf(
+        "a" to listOf("â"), "i" to listOf("î"), "u" to listOf("û")
+    )
+
+    private fun latin(
+        order: Array<String> = arrayOf("qwertyuiop", "asdfghjkl", "zxcvbnm"),
+        label: String,
+        variants: Map<String, List<String>> = emptyMap()
+    ) = LanguageLayout(rows(*order), variants, label)
 
     fun forLanguage(language: String): LanguageLayout = when (language) {
-        "de" -> latin(arrayOf("qwertzuiop", "asdfghjkl", "yxcvbnm"), "Deutsch")
-        "fr" -> latin(arrayOf("azertyuiop", "qsdfghjklm", "wxcvbn"), "Français")
-        "es" -> latin(label = "Español")
-        "pt" -> latin(label = "Português")
-        "it" -> latin(label = "Italiano")
-        "nl" -> latin(label = "Nederlands")
-        "tr" -> latin(arrayOf("qwertyuıopğü", "asdfghjklşi", "zxcvbnmöç"), "Türkçe")
-        "cs" -> latin(arrayOf("qwertzuiop", "asdfghjkl", "yxcvbnm"), "Čeština")
-        "sk" -> latin(arrayOf("qwertzuiop", "asdfghjkl", "yxcvbnm"), "Slovenčina")
-        "pl" -> latin(label = "Polski")
+        "de" -> latin(arrayOf("qwertzuiop", "asdfghjkl", "yxcvbnm"), "Deutsch", germanVariants)
+        "fr" -> latin(arrayOf("azertyuiop", "qsdfghjklm", "wxcvbn"), "Français", frenchVariants)
+        "es" -> latin(label = "Español", variants = spanishVariants)
+        "pt" -> latin(label = "Português", variants = portugueseVariants)
+        "it" -> latin(label = "Italiano", variants = italianVariants)
+        "nl" -> latin(label = "Nederlands", variants = dutchVariants)
+        "tr" -> latin(arrayOf("qwertyuıopğü", "asdfghjklşi", "zxcvbnmöç"), "Türkçe", turkishVariants)
+        "cs" -> latin(arrayOf("qwertzuiop", "asdfghjkl", "yxcvbnm"), "Čeština", czechVariants)
+        "sk" -> latin(arrayOf("qwertzuiop", "asdfghjkl", "yxcvbnm"), "Slovenčina", slovakVariants)
+        "pl" -> latin(label = "Polski", variants = polishVariants)
         "ru" -> LanguageLayout(rows("йцукенгшщзх", "фывапролджэ", "ячсмитьбю"), spaceLabel = "Русский")
         "uk" -> LanguageLayout(rows("йцукенгшщзхї", "фівапролджє", "ячсмитьбю"), spaceLabel = "Українська")
         "be" -> LanguageLayout(rows("йцукенгшўзх", "фывапролджэ", "ячсмітьбю"), spaceLabel = "Беларуская")

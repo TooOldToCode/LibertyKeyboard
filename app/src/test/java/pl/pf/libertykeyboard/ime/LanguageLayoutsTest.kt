@@ -11,9 +11,21 @@ class LanguageLayoutsTest {
         val polish = LanguageLayouts.forLanguage("pl")
         val german = LanguageLayouts.forLanguage("de")
 
-        assertTrue("ą" in polish.variants.getValue("a"))
-        assertTrue("ä" in german.variants.getValue("a"))
+        assertEquals(listOf("ą"), polish.variants.getValue("a"))
+        assertEquals(listOf("ź", "ż"), polish.variants.getValue("z"))
+        assertEquals(listOf("ä"), german.variants.getValue("a"))
         assertEquals("qwertzuiop", german.rows.first().joinToString(""))
+    }
+
+    @Test
+    fun `language variants do not leak characters from other alphabets`() {
+        val polish = LanguageLayouts.forLanguage("pl").variants.values.flatten()
+        val german = LanguageLayouts.forLanguage("de").variants.values.flatten()
+        val english = LanguageLayouts.forLanguage("en").variants
+
+        assertFalse("ä" in polish)
+        assertFalse("ą" in german)
+        assertTrue(english.isEmpty())
     }
 
     @Test
