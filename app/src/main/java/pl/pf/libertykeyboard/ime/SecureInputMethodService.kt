@@ -516,21 +516,12 @@ class SecureInputMethodService : InputMethodService() {
 
     private fun submitEncryptedMessage(connection: InputConnection) {
         connection.finishComposingText()
-
-        val action = currentInputEditorInfo?.imeOptions?.and(EditorInfo.IME_MASK_ACTION)
-            ?: EditorInfo.IME_ACTION_UNSPECIFIED
-        // NEXT can move focus away from the editor. Other explicit actions are
-        // safe to pass back to the application exactly as it advertised them.
-        val handled = when (action) {
-            EditorInfo.IME_ACTION_SEND,
-            EditorInfo.IME_ACTION_DONE,
-            EditorInfo.IME_ACTION_GO -> connection.performEditorAction(action)
-            else -> false
-        }
-        if (!handled) {
-            connection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
-            connection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
-        }
+        // Some messengers report an editor action as handled without actually
+        // submitting the message. Emit a real Enter key press after replacing
+        // the plaintext so the host app receives the same events as from a
+        // physical keyboard.
+        connection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
+        connection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
     }
 
     private fun decryptSelectionOrClipboard() {
