@@ -2,7 +2,7 @@
 
 Zalecany adres:
 
-`https://toooldtocode.github.io/LibertyKeyboard/privacy-policy`
+`https://toooldtocode.github.io/LibertyKeyboard/privacy-policy.html`
 
 ## Włączenie strony
 

@@ -1,3 +1,117 @@
+# Liberty Keyboard Privacy Policy
+
+**Effective date: July 27, 2026**
+
+**Last updated: July 27, 2026**
+
+This policy applies to the **Liberty Keyboard** Android application
+(`pl.pf.libertykeyboard`) provided by the developer **TooOldToCode**.
+
+## Summary
+
+Liberty Keyboard does not transmit user data, typed text, passwords, encrypted
+messages, or decrypted messages to the developer or any third party. The app
+contains no advertising, analytics, tracking modules, or proprietary network
+communication. The processing described below takes place locally on the user's
+device.
+
+## Data processed by the keyboard
+
+As a system input method, Liberty Keyboard receives characters entered by the
+user through its keys and passes them to the currently selected text field. When
+encryption is enabled, text before the cursor is encrypted locally and replaced
+with ciphertext beginning with `LibertyKeyboard:`.
+
+The session password:
+
+- is entered inside the keyboard interface;
+- exists only in the application process memory;
+- is not saved to files, preferences, or backups;
+- is removed when the user clears the password or the app process ends;
+- is never transmitted off the device.
+
+## Optional Accessibility Service
+
+Automatic detection and preview of decrypted messages is optional. After the
+user gives consent and manually enables the service in Android settings, Liberty
+Keyboard may access:
+
+- text and element descriptions visible in the active window of other apps;
+- notification content exposed by Android;
+- window and content changes required to detect a new message.
+
+This access is used only to locate strings beginning with `LibertyKeyboard:` and
+attempt to decrypt them locally with the session password. The service does not
+click controls, enter text, send messages, or alter other applications.
+
+Raw screen and notification content is not saved. The app temporarily retains
+in memory:
+
+- a limited technical record of recognized ciphertexts to prevent duplicate
+  display;
+- decrypted-message history shown in the keyboard panel.
+
+The user can delete this history from the keyboard. It is also removed when the
+session password is cleared or the application process ends.
+
+The service can be disabled at any time in Android Accessibility settings.
+Keyboard input and manual encryption can operate without it.
+
+## Clipboard
+
+When the user explicitly invokes manual decryption, the app checks selected text
+and then clipboard content for Liberty Keyboard ciphertext. Clipboard content is
+processed locally and is neither transmitted nor persistently stored.
+
+## Collection, sharing, and sale
+
+Liberty Keyboard:
+
+- does not transmit user data off the device;
+- does not collect data on developer servers;
+- does not share data with third parties;
+- does not sell data;
+- does not create user accounts;
+- does not use advertising, telemetry, or analytics.
+
+Messages sent through another messaging application are also subject to that
+application's privacy practices. Liberty Keyboard does not control how the
+destination application processes the ciphertext.
+
+## Security
+
+Messages are encrypted locally using AES-256-GCM. A per-message key is derived
+from the password using Argon2id and a random salt. Security depends in part on
+password strength and on sharing the password securely. Source availability is
+not a guarantee of complete security or anonymity.
+
+## Retention and deletion
+
+The app has no remote database or user accounts, so the developer holds no user
+data that can be deleted upon request. Temporary data can be removed by clearing
+the password and history, terminating the app process, or uninstalling the app.
+
+## Children
+
+The app is not specifically directed to children, and the developer does not
+knowingly collect data from children or other users.
+
+## Changes
+
+Changes will be posted on this page with an updated revision date. If data access
+or use changes, the app disclosures and relevant declarations will also be
+updated.
+
+## Contact
+
+Developer: **TooOldToCode**
+
+Source code: <https://github.com/TooOldToCode/LibertyKeyboard>
+
+Privacy inquiries: <https://github.com/TooOldToCode/LibertyKeyboard/issues>
+
+---
+
 # Polityka prywatności Liberty Keyboard
 
 **Data wejścia w życie: 27 lipca 2026 r.**
@@ -115,117 +229,3 @@ Kod źródłowy: <https://github.com/TooOldToCode/LibertyKeyboard>
 
 Pytania dotyczące prywatności:
 <https://github.com/TooOldToCode/LibertyKeyboard/issues>
-
----
-
-# Liberty Keyboard Privacy Policy
-
-**Effective date: July 27, 2026**
-
-**Last updated: July 27, 2026**
-
-This policy applies to the **Liberty Keyboard** Android application
-(`pl.pf.libertykeyboard`) provided by the developer **TooOldToCode**.
-
-## Summary
-
-Liberty Keyboard does not transmit user data, typed text, passwords, encrypted
-messages, or decrypted messages to the developer or any third party. The app
-contains no advertising, analytics, tracking modules, or proprietary network
-communication. The processing described below takes place locally on the user's
-device.
-
-## Data processed by the keyboard
-
-As a system input method, Liberty Keyboard receives characters entered by the
-user through its keys and passes them to the currently selected text field. When
-encryption is enabled, text before the cursor is encrypted locally and replaced
-with ciphertext beginning with `LibertyKeyboard:`.
-
-The session password:
-
-- is entered inside the keyboard interface;
-- exists only in the application process memory;
-- is not saved to files, preferences, or backups;
-- is removed when the user clears the password or the app process ends;
-- is never transmitted off the device.
-
-## Optional Accessibility Service
-
-Automatic detection and preview of decrypted messages is optional. After the
-user gives consent and manually enables the service in Android settings, Liberty
-Keyboard may access:
-
-- text and element descriptions visible in the active window of other apps;
-- notification content exposed by Android;
-- window and content changes required to detect a new message.
-
-This access is used only to locate strings beginning with `LibertyKeyboard:` and
-attempt to decrypt them locally with the session password. The service does not
-click controls, enter text, send messages, or alter other applications.
-
-Raw screen and notification content is not saved. The app temporarily retains
-in memory:
-
-- a limited technical record of recognized ciphertexts to prevent duplicate
-  display;
-- decrypted-message history shown in the keyboard panel.
-
-The user can delete this history from the keyboard. It is also removed when the
-session password is cleared or the application process ends.
-
-The service can be disabled at any time in Android Accessibility settings.
-Keyboard input and manual encryption can operate without it.
-
-## Clipboard
-
-When the user explicitly invokes manual decryption, the app checks selected text
-and then clipboard content for Liberty Keyboard ciphertext. Clipboard content is
-processed locally and is neither transmitted nor persistently stored.
-
-## Collection, sharing, and sale
-
-Liberty Keyboard:
-
-- does not transmit user data off the device;
-- does not collect data on developer servers;
-- does not share data with third parties;
-- does not sell data;
-- does not create user accounts;
-- does not use advertising, telemetry, or analytics.
-
-Messages sent through another messaging application are also subject to that
-application's privacy practices. Liberty Keyboard does not control how the
-destination application processes the ciphertext.
-
-## Security
-
-Messages are encrypted locally using AES-256-GCM. A per-message key is derived
-from the password using Argon2id and a random salt. Security depends in part on
-password strength and on sharing the password securely. Source availability is
-not a guarantee of complete security or anonymity.
-
-## Retention and deletion
-
-The app has no remote database or user accounts, so the developer holds no user
-data that can be deleted upon request. Temporary data can be removed by clearing
-the password and history, terminating the app process, or uninstalling the app.
-
-## Children
-
-The app is not specifically directed to children, and the developer does not
-knowingly collect data from children or other users.
-
-## Changes
-
-Changes will be posted on this page with an updated revision date. If data access
-or use changes, the app disclosures and relevant declarations will also be
-updated.
-
-## Contact
-
-Developer: **TooOldToCode**
-
-Source code: <https://github.com/TooOldToCode/LibertyKeyboard>
-
-Privacy inquiries: <https://github.com/TooOldToCode/LibertyKeyboard/issues>

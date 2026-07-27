@@ -66,6 +66,6 @@ class MainActivity : Activity() {
 
     companion object {
         private const val PRIVACY_POLICY_URL =
-            "https://toooldtocode.github.io/LibertyKeyboard/privacy-policy"
+            "https://toooldtocode.github.io/LibertyKeyboard/privacy-policy.html"
     }
 }
