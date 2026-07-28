@@ -24,6 +24,7 @@ APK można zbudować bez instalowania Android Studio.
 
 - [Instrukcja dla Windowsa i Linuxa](BUILDING.pl.md)
 - [Build instructions in English](BUILDING.md)
+- [Instrukcja użytkownika](docs/user-guide.md)
 
 **Dlaczego powstała Liberty Keyboard?**
 
@@ -48,6 +49,17 @@ Klawiatura integruje się z dowolnym komunikatorem, dzięki czemu prywatność z
 **Drogi Użytkowniku**
 
 Oddaję w Twoje ręce aplikację, którą stworzyłem przede wszystkim z myślą o zwykłych rozmowach z rodziną, przyjaciółmi i bliskimi. Wierzę, że prywatna korespondencja powinna pozostać prywatna.
+
+## Autor
+
+**Przemysław Frątczak (TooOldToCode)**
+
+Liberty Keyboard jest prywatnym projektem rozwijanym metodą vibe coding przy
+wsparciu OpenAI Codex. Codex pomaga w implementacji, analizie, dokumentacji i
+usuwaniu błędów. Koncepcja, wymagania, testowanie, akceptacja zmian i decyzje
+dotyczące publikowanych wersji należą do autora.
+
+Więcej informacji: [AUTHORS.md](AUTHORS.md).
 
 **PS**
 

@@ -20,9 +20,9 @@ to assist users with disabilities, therefore the app does not declare
 **Suggested description:**
 
 > Liberty Keyboard provides an optional feature that detects Liberty Keyboard
-> ciphertext displayed in messaging applications and shows the locally decrypted
-> text in the keyboard. Android messaging applications do not expose their
-> rendered message content through a narrower general-purpose API. When the user
+> ciphertext displayed in the active window of another application and shows the
+> locally decrypted text in the keyboard. Android applications do not generally
+> expose their rendered text through a narrower cross-application API. When the user
 > explicitly enables the feature, AccessibilityService reads text and content
 > descriptions from the active window and reads notification text made available
 > by Android. It searches only for strings beginning with "LibertyKeyboard:" and

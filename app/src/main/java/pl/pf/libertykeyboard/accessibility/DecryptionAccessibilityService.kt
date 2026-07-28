@@ -27,10 +27,15 @@ class DecryptionAccessibilityService : AccessibilityService() {
         if (!SecretSession.hasSecret()) return
 
         decryptNotification(textFromNotification(event))
+        // Apps can expose newly rendered text in the event source before
+        // rootInActiveWindow contains it (or while the IME window is active).
+        // The tree walker is bounded, so processing it here cannot grow without
+        // limit as it did when every visible window was scanned.
+        event.source?.let { decryptWindow(textFromNodeTree(it)) }
 
         // The event often arrives just before the new bubble is present. Debounce one
-        // short series of bounded active-window scans. Messenger animations can take
-        // longer than one frame, while scanning every window would stall the IME.
+        // short series of bounded active-window scans. UI rendering and animations
+        // can take longer than one frame, while scanning every window would stall the IME.
         handler.removeCallbacks(rescanActiveWindow)
         WINDOW_RESCAN_DELAYS_MS.forEach { delay ->
             handler.postDelayed(rescanActiveWindow, delay)

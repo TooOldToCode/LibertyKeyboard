@@ -101,6 +101,17 @@ Not because we have something to hide.
 
 Because human dignity requires a space where thoughts may exist before they become public.
 
+## Author
+
+**Przemysław Frątczak (TooOldToCode)**
+
+Liberty Keyboard is a personal project developed through a vibe-coding workflow
+with assistance from OpenAI Codex. Codex assists with implementation, analysis,
+documentation, and debugging. The author is responsible for the concept,
+requirements, testing, acceptance of changes, and release decisions.
+
+For more information, see [AUTHORS.md](AUTHORS.md).
+
 **PS**
 
 The political references used throughout this description are expressions of the author's personal views and are intended as satire and social commentary. They should not be interpreted as statements of fact or as attacks on any individual or institution.

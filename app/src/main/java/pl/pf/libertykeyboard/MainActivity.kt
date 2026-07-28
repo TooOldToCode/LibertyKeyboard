@@ -3,9 +3,9 @@ package pl.pf.libertykeyboard
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
-import android.net.Uri
 import android.view.Gravity
 import android.widget.Button
 import android.widget.LinearLayout
@@ -39,6 +39,16 @@ class MainActivity : Activity() {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
             }
         })
+        layout.addView(Button(this).apply {
+            text = "Instrukcja użytkownika"
+            setOnClickListener {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(USER_GUIDE_URL)))
+            }
+        })
+        layout.addView(Button(this).apply {
+            text = "O aplikacji"
+            setOnClickListener { showAbout() }
+        })
         setContentView(layout)
     }
 
@@ -64,8 +74,28 @@ class MainActivity : Activity() {
             .show()
     }
 
+    private fun showAbout() {
+        AlertDialog.Builder(this)
+            .setTitle("Liberty Keyboard ${getString(R.string.app_version_name)}")
+            .setMessage(
+                "Autor\n" +
+                    "Przemysław Frątczak (TooOldToCode)\n\n" +
+                    "Aplikacja powstaje metodą vibe coding przy wsparciu OpenAI Codex.\n\n" +
+                    "Licencja\nGNU General Public License v3.0"
+            )
+            .setNeutralButton("Kod źródłowy") { _, _ ->
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(SOURCE_CODE_URL)))
+            }
+            .setPositiveButton("Zamknij", null)
+            .show()
+    }
+
     companion object {
         private const val PRIVACY_POLICY_URL =
             "https://toooldtocode.github.io/LibertyKeyboard/privacy-policy.html"
+        private const val USER_GUIDE_URL =
+            "https://toooldtocode.github.io/LibertyKeyboard/user-guide.html"
+        private const val SOURCE_CODE_URL =
+            "https://github.com/TooOldToCode/LibertyKeyboard"
     }
 }

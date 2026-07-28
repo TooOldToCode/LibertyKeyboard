@@ -516,10 +516,9 @@ class SecureInputMethodService : InputMethodService() {
 
     private fun submitEncryptedMessage(connection: InputConnection) {
         connection.finishComposingText()
-        // Some messengers report an editor action as handled without actually
-        // submitting the message. Emit a real Enter key press after replacing
-        // the plaintext so the host app receives the same events as from a
-        // physical keyboard.
+        // Some host apps report an editor action as handled without applying its
+        // expected effect. Emit a real Enter key press after replacing the plaintext
+        // so any active editor receives the same events as from a physical keyboard.
         connection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_ENTER))
         connection.sendKeyEvent(KeyEvent(KeyEvent.ACTION_UP, KeyEvent.KEYCODE_ENTER))
     }
@@ -620,6 +619,8 @@ class SecureInputMethodService : InputMethodService() {
         historyUp.isEnabled = historyIndex > 0
         historyDown.isEnabled = historyIndex < size - 1
         historyPanel.visibility = View.VISIBLE
+        historyPanel.requestLayout()
+        root.requestLayout()
     }
 
     private fun clearSession() {
