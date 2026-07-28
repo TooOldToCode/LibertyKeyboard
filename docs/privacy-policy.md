@@ -52,7 +52,8 @@ Raw screen and notification content is not saved. The app temporarily retains
 in memory:
 
 - a limited technical record of recognized ciphertexts to prevent duplicate
-  display;
+  display, including outgoing ciphertexts generated in the current session so
+  they are not shown as received messages;
 - decrypted-message history shown in the keyboard panel.
 
 The user can delete this history from the keyboard. It is also removed when the
@@ -169,8 +170,9 @@ zmienia zawartości innych aplikacji.
 Surowa treść ekranu i powiadomień nie jest zapisywana. Aplikacja tymczasowo
 przechowuje w pamięci:
 
-- ograniczoną techniczną listę rozpoznanych szyfrogramów, aby nie wyświetlać
-  wielokrotnie tej samej wiadomości;
+- ograniczoną techniczną listę rozpoznanych szyfrogramów, w tym szyfrogramów
+  wychodzących wygenerowanych w bieżącej sesji, aby nie wyświetlać wielokrotnie
+  tej samej wiadomości ani nie przedstawiać własnej wiadomości jako odebranej;
 - historię odszyfrowanych wiadomości widoczną w panelu klawiatury.
 
 Historia może zostać usunięta przez użytkownika z panelu klawiatury. Jest również

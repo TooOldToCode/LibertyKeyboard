@@ -1,17 +1,20 @@
 package pl.pf.libertykeyboard.accessibility
 
-import android.app.Notification
 import android.accessibilityservice.AccessibilityService
+import android.app.Notification
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import android.view.accessibility.AccessibilityWindowInfo
+import pl.pf.libertykeyboard.crypto.CiphertextCandidateDetector
+import pl.pf.libertykeyboard.crypto.CiphertextRegistry
 import pl.pf.libertykeyboard.crypto.CryptoEngine
-import pl.pf.libertykeyboard.crypto.CiphertextEnvelope
 import pl.pf.libertykeyboard.crypto.DecryptedMessageHistory
 import pl.pf.libertykeyboard.crypto.SecretSession
+import java.util.concurrent.Executors
 
 /**
  * User-enabled helper only. It reads visible encrypted text, performs no action
@@ -19,67 +22,66 @@ import pl.pf.libertykeyboard.crypto.SecretSession
  */
 class DecryptionAccessibilityService : AccessibilityService() {
     private val handler = Handler(Looper.getMainLooper())
-    private val rescanActiveWindow = Runnable { scanActiveWindow() }
-    private val processedWindowOccurrences = LinkedHashMap<String, Int>()
-    private val seenNotificationCiphertexts = LinkedHashSet<String>()
+    private val rescanWindows = Runnable { scanRelevantWindows() }
+    private val decryptionExecutor = Executors.newSingleThreadExecutor()
 
     override fun onAccessibilityEvent(event: AccessibilityEvent) {
         if (!SecretSession.hasSecret()) return
 
-        decryptNotification(textFromNotification(event))
-        // Apps can expose newly rendered text in the event source before
-        // rootInActiveWindow contains it (or while the IME window is active).
-        // The tree walker is bounded, so processing it here cannot grow without
-        // limit as it did when every visible window was scanned.
-        event.source?.let { decryptWindow(textFromNodeTree(it)) }
-
-        // The event often arrives just before the new bubble is present. Debounce one
-        // short series of bounded active-window scans. UI rendering and animations
-        // can take longer than one frame, while scanning every window would stall the IME.
-        handler.removeCallbacks(rescanActiveWindow)
-        WINDOW_RESCAN_DELAYS_MS.forEach { delay ->
-            handler.postDelayed(rescanActiveWindow, delay)
+        if (event.eventType == AccessibilityEvent.TYPE_NOTIFICATION_STATE_CHANGED) {
+            decryptTexts(textFromNotification(event))
         }
+
+        // Some applications expose useful text directly on the event even when
+        // event.source is null or contains only a small changed subtree.
+        decryptTexts(buildList {
+            event.text.mapTo(this, CharSequence::toString)
+            event.contentDescription?.let { add(it.toString()) }
+        })
+        event.source?.let { decryptTexts(textFromNodeTree(it)) }
+
+        // Scan immediately so a steady stream of events cannot postpone all work.
+        // Follow-up scans catch bubbles rendered after the original event.
+        scanRelevantWindows()
+        handler.removeCallbacks(rescanWindows)
+        WINDOW_RESCAN_DELAYS_MS.forEach { handler.postDelayed(rescanWindows, it) }
     }
 
-    private fun scanActiveWindow() {
+    private fun scanRelevantWindows() {
         if (!SecretSession.hasSecret()) return
-        rootInActiveWindow?.let { decryptWindow(textFromNodeTree(it)) }
-    }
+        val roots = LinkedHashMap<Int, AccessibilityNodeInfo>()
 
-    private fun decryptWindow(visibleText: List<String>) {
-        val occurrenceCounts = ciphertextsIn(visibleText).groupingBy { it }.eachCount()
-        occurrenceCounts.forEach { (candidate, count) ->
-            val alreadyProcessed = processedWindowOccurrences[candidate] ?: 0
-            var processed = alreadyProcessed
-            repeat((count - alreadyProcessed).coerceAtLeast(0)) {
-                if (decryptAndRemember(candidate)) processed++
+        windows.asSequence()
+            .filter { it.type == AccessibilityWindowInfo.TYPE_APPLICATION }
+            .forEach { window ->
+                window.root?.let { root ->
+                    if (root.packageName?.toString() != packageName) roots[window.id] = root
+                }
             }
-            if (processed > alreadyProcessed) rememberWindowOccurrences(candidate, processed)
-        }
-    }
 
-    private fun decryptNotification(notificationText: List<String>) {
-        ciphertextsIn(notificationText).distinct().forEach { candidate ->
-            if (!seenNotificationCiphertexts.add(candidate)) return@forEach
-            if (decryptAndRemember(candidate)) {
-                rememberWindowOccurrences(
-                    candidate,
-                    (processedWindowOccurrences[candidate] ?: 0) + 1
-                )
+        // Some devices expose no interactive-window list despite the requested
+        // service flag. Keep the active root as a compatibility fallback.
+        if (roots.isEmpty()) {
+            rootInActiveWindow?.let { root ->
+                if (root.packageName?.toString() != packageName) roots[Int.MIN_VALUE] = root
             }
         }
-        trimToSize(seenNotificationCiphertexts)
+        roots.values.forEach { decryptTexts(textFromNodeTree(it)) }
     }
 
-    private fun ciphertextsIn(visibleText: List<String>): List<String> {
-        val individual = visibleText.flatMap(CiphertextEnvelope::findAll)
-        // Some Compose-based communicators split one text bubble over several
-        // accessibility nodes. This also catches a marker exposed separately.
-        if (visibleText.size <= 1) return individual
-        val joinedOnly = CiphertextEnvelope.findAll(visibleText.joinToString(""))
-            .filterNot(individual::contains)
-        return individual + joinedOnly
+    private fun decryptTexts(texts: List<String>) {
+        val candidates = CiphertextCandidateDetector.find(texts)
+        if (candidates.isEmpty()) return
+        decryptionExecutor.execute {
+            val successful = mutableListOf<String>()
+            candidates.forEach { candidate ->
+                // Once a shorter reconstructed candidate authenticates, longer
+                // candidates with that prefix merely contain adjacent UI text.
+                if (successful.any(candidate::startsWith)) return@forEach
+                if (!CiphertextRegistry.claim(candidate)) return@forEach
+                if (decryptAndRemember(candidate)) successful.add(candidate)
+            }
+        }
     }
 
     private fun decryptAndRemember(candidate: String): Boolean {
@@ -93,27 +95,13 @@ class DecryptionAccessibilityService : AccessibilityService() {
         return false
     }
 
-    private fun rememberWindowOccurrences(ciphertext: String, count: Int) {
-        processedWindowOccurrences[ciphertext] = count
-        while (processedWindowOccurrences.size > MAX_REMEMBERED_CIPHERTEXTS) {
-            processedWindowOccurrences.remove(processedWindowOccurrences.keys.first())
-        }
-    }
-
-    private fun trimToSize(values: LinkedHashSet<String>) {
-        while (values.size > MAX_REMEMBERED_CIPHERTEXTS) {
-            val oldest = values.iterator()
-            oldest.next()
-            oldest.remove()
-        }
-    }
-
     override fun onInterrupt() {
-        handler.removeCallbacks(rescanActiveWindow)
+        handler.removeCallbacks(rescanWindows)
     }
 
     override fun onDestroy() {
-        handler.removeCallbacks(rescanActiveWindow)
+        handler.removeCallbacks(rescanWindows)
+        decryptionExecutor.shutdownNow()
         super.onDestroy()
     }
 
@@ -169,7 +157,7 @@ class DecryptionAccessibilityService : AccessibilityService() {
         }
 
     companion object {
-        private val WINDOW_RESCAN_DELAYS_MS = longArrayOf(250L, 750L, 1_500L)
+        private val WINDOW_RESCAN_DELAYS_MS = longArrayOf(300L, 1_000L)
         private const val MAX_SCANNED_NODES = 1_500
         private const val MAX_SCANNED_CHARACTERS = 100_000
         private val NOTIFICATION_TEXT_KEYS = arrayOf(
@@ -178,6 +166,5 @@ class DecryptionAccessibilityService : AccessibilityService() {
             Notification.EXTRA_TITLE,
             Notification.EXTRA_SUB_TEXT
         )
-        private const val MAX_REMEMBERED_CIPHERTEXTS = 100
     }
 }
