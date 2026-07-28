@@ -22,7 +22,7 @@ class MainActivity : Activity() {
             setPadding(padding, padding, padding, padding)
         }
         layout.addView(TextView(this).apply {
-            text = "Secure Keyboard\n\nKlawiatura szyfruje lokalnie. Hasło wpisujesz wyłącznie z paska klawiatury; aplikacja go nie zapisuje."
+            text = "Liberty Keyboard\n\nKlawiatura szyfruje lokalnie. Hasło wpisujesz wyłącznie z paska klawiatury; aplikacja go nie zapisuje."
             textSize = 18f
         })
         layout.addView(Button(this).apply {
