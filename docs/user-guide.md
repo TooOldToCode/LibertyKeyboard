@@ -32,6 +32,21 @@ This button displays information about the optional Accessibility Service. The
 Android settings where Liberty Keyboard can be enabled open only after selecting
 **“I agree—open settings”**.
 
+On Android 13 or newer, especially when the application was installed outside
+Google Play, Liberty Keyboard may initially be greyed out on the Accessibility
+screen. In that case:
+
+1. Open Android **Settings**.
+2. Select **Apps** and then **Liberty Keyboard**. If necessary, first select
+   **See all apps**.
+3. Open the **⋮** menu in the upper-right corner.
+4. Select **Allow restricted settings** and follow the on-screen instructions.
+5. Return to the Accessibility settings and enable **Liberty Keyboard**.
+
+Menu names and their location may vary between device manufacturers and Android
+versions. Allow restricted settings only if you trust the application and the
+source from which it was installed.
+
 The service is required to detect encrypted text automatically in the active
 window of any application and in notifications. Its effectiveness depends on
 which elements an application exposes through Android's accessibility
@@ -257,6 +272,22 @@ tekst. Liberty Keyboard przetwarza go lokalnie i nie wysyła go do dewelopera.
 Ten przycisk pokazuje informację o opcjonalnej Usłudze ułatwień dostępu. Dopiero
 po wybraniu **„Zgadzam się — przejdź do ustawień”** zostaną otwarte ustawienia
 Androida, w których można włączyć usługę Liberty Keyboard.
+
+Na Androidzie 13 lub nowszym, szczególnie gdy aplikację zainstalowano spoza
+Google Play, Liberty Keyboard może być początkowo wyszarzona na ekranie
+ułatwień dostępu. W takim przypadku:
+
+1. Otwórz **Ustawienia** Androida.
+2. Wybierz **Aplikacje**, a następnie **Liberty Keyboard**. W razie potrzeby
+   wybierz najpierw **Wyświetl wszystkie aplikacje**.
+3. Otwórz menu **⋮** w prawym górnym rogu.
+4. Wybierz **Zezwól na ustawienia z ograniczeniem** i wykonaj instrukcje
+   wyświetlone na ekranie.
+5. Wróć do ustawień ułatwień dostępu i włącz **Liberty Keyboard**.
+
+Nazwy i położenie opcji mogą się różnić zależnie od producenta urządzenia oraz
+wersji Androida. Zezwalaj na ustawienia z ograniczeniem tylko wtedy, gdy ufasz
+aplikacji i źródłu, z którego została zainstalowana.
 
 Usługa jest potrzebna do automatycznego wykrywania zaszyfrowanych tekstów
 widocznych w aktywnym oknie dowolnej aplikacji i w powiadomieniach. Skuteczność
