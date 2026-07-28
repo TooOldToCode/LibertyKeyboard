@@ -1,3 +1,232 @@
+[English](#english) | [Polski](#polski)
+
+<a id="english"></a>
+
+# Liberty Keyboard User Guide
+
+## 1. Getting started
+
+After installation, open **Liberty Keyboard** from the application list. You
+will see the setup screen. It is not used for typing messages—the actual
+keyboard appears in any application with a standard text field, such as a
+messenger, SMS app, email client, browser, or notes app.
+
+### “Enable keyboard”
+
+This button opens the Android system keyboard settings.
+
+1. Find **Liberty Keyboard** in the list.
+2. Enable it and accept the system warning.
+3. Open an application and tap its text field.
+4. If another keyboard appears, use Android's keyboard selector or the **🌐**
+   key and select **Liberty Keyboard**.
+
+Liberty Keyboard must be enabled as an input method before it can be used.
+Android displays a standard warning for every installed keyboard because a
+keyboard technically handles the text entered by the user. Liberty Keyboard
+processes this text locally and does not send it to the developer.
+
+### “Enable decrypted message preview”
+
+This button displays information about the optional Accessibility Service. The
+Android settings where Liberty Keyboard can be enabled open only after selecting
+**“I agree—open settings”**.
+
+The service is required to detect encrypted text automatically in the active
+window of any application and in notifications. Its effectiveness depends on
+which elements an application exposes through Android's accessibility
+interface. Without this service, you can still:
+
+- write and encrypt messages;
+- manually decrypt selected text or ciphertext from the clipboard.
+
+The Accessibility Service is therefore **optional**, but it must be enabled for
+decrypted messages to appear automatically in the keyboard panel. It can be
+disabled later in Android's accessibility settings.
+
+### “Privacy Policy”
+
+Opens the public privacy policy in a browser. The document describes local
+processing of text, passwords, clipboard content, visible screen content, and
+notifications.
+
+### “User Guide”
+
+Opens this guide in a browser.
+
+### “About”
+
+Displays the version number, author, information that the application was
+created using vibe coding with assistance from OpenAI Codex, the license, and a
+button linking to the source code.
+
+## 2. Setting a shared password
+
+People who want to exchange encrypted messages must set exactly the same
+password. Share it through a secure channel other than the conversation it is
+intended to protect.
+
+1. Open a text field in an application and select Liberty Keyboard.
+2. Tap the **key/password settings** icon in the upper-left corner.
+3. Enter the password using Liberty Keyboard.
+4. Tap **ACTIVATE** or the **↵** key.
+
+The password is stored only in the memory of the running application. It may
+need to be entered again after it is cleared, the process stops, or the device
+restarts.
+
+Use a long, hard-to-guess password. Installing the application does not share
+the password with other participants.
+
+## 3. Keyboard toolbar
+
+### Key/password settings icon
+
+Opens the session password entry panel.
+
+In the password panel:
+
+- **ACTIVATE**—stores the password in memory for the current session and enables
+  encryption;
+- **CLEAR**—removes the password and decrypted-message history.
+
+### “ON” / “OFF”
+
+Enables or disables automatic encryption with the **↵** key.
+
+- **ON**—the **↵** key encrypts the text before the cursor, replaces it with
+  ciphertext, and sends an Enter key event to the messenger;
+- **OFF**—the keyboard enters plain text and **↵** behaves like a regular
+  newline.
+
+If no password has been set, attempting to enable **ON** opens the password
+panel.
+
+### “DECRYPT”
+
+Starts manual decryption:
+
+1. the application first checks text selected in the active field;
+2. it then checks the current clipboard content;
+3. it looks for a string beginning with `LibertyKeyboard:`;
+4. it displays the decrypted result in the keyboard history panel.
+
+This is useful when a messenger does not expose a message to the Accessibility
+Service. Copy the entire ciphertext and tap **DECRYPT**.
+
+### “CLEAR”
+
+Removes:
+
+- the current session password;
+- decrypted messages from the history;
+- the enabled encryption state.
+
+After using this button, set the password again to encrypt or decrypt messages.
+
+## 4. Decrypted-message panel
+
+The panel appears above the keys after the application successfully decrypts at
+least one message.
+
+- **▲**—shows the previous message in the history;
+- **▼**—shows the next message;
+- **×**—removes the currently displayed message;
+- long-press **×**—removes the entire history.
+
+The history exists only in the application process memory and is not stored
+permanently.
+
+## 5. Function keys
+
+- **↑ / ⇧**—enables uppercase for one character, then returns to lowercase;
+- **⌫**—deletes a character; holding it repeats deletion;
+- **?123**—switches to digits and symbols;
+- **=\\<**—shows an additional set of symbols;
+- **ABC**—returns to letters;
+- **🌐**—switches to the next keyboard or opens the system keyboard selector;
+- **space**—inserts a space; its label depends on the selected language;
+- **↵**—in **ON** mode, encrypts and attempts to send the message; in **OFF**
+  mode, inserts a newline.
+
+Long-pressing some letters displays language variants and diacritical
+characters. Slide your finger to the desired variant and release it.
+
+## 6. Sending an encrypted message
+
+1. Make sure all participants have set the same password.
+2. Check that the encryption indicator shows **ON**.
+3. Enter the message in the messenger's text field.
+4. Tap **↵**.
+5. The plain text is replaced with a string beginning with
+   `LibertyKeyboard:`.
+6. The keyboard sends a physical Enter key event to the messenger.
+
+Enter behavior also depends on the messenger's settings. If it is configured so
+that Enter creates a new line, the ciphertext may remain in the field or receive
+a newline instead of being sent. In that case, use the messenger's send button
+or change its Enter setting.
+
+## 7. Receiving messages
+
+With the correct password set:
+
+- if the optional Accessibility Service is enabled, the application
+  automatically looks for ciphertext in the active window and notifications;
+- decrypted text appears in the keyboard history panel;
+- if automatic detection does not work, copy the ciphertext and tap
+  **DECRYPT**.
+
+Ciphertext cannot be decrypted with a different password. The application does
+not synchronize passwords between devices.
+
+## 8. Troubleshooting
+
+### The keyboard does not appear
+
+- make sure Liberty Keyboard is enabled in the system keyboard settings;
+- tap the text field again;
+- use the system keyboard selector and choose Liberty Keyboard;
+- if the Accessibility Service was working intensively, disable and re-enable
+  it;
+- restart the messenger.
+
+### A message is not decrypted automatically
+
+- make sure the correct password is set;
+- make sure the Liberty Keyboard service is enabled in the accessibility
+  settings;
+- scroll the conversation to refresh visible messages;
+- copy the entire `LibertyKeyboard:...` string and use **DECRYPT**.
+
+### Enter does not send the message
+
+Some messengers treat a physical Enter key as a newline. Check the messenger's
+“Enter sends message” setting or use its on-screen send button.
+
+## 9. Important security limitations
+
+- Liberty Keyboard protects message content before passing it to the messenger,
+  but it does not hide metadata such as participants, communication time, or
+  the fact that a message was sent.
+- Anyone who knows the shared password can decrypt the group's messages.
+- Losing or disclosing the password compromises the confidentiality of messages
+  that can be decrypted with it.
+- The application does not verify the sender's identity. Anyone who knows the
+  password can create valid ciphertext.
+- Security depends on password strength and how it is shared.
+
+## 10. Privacy and source code
+
+The full [Privacy Policy](./privacy-policy.md#english) describes data processing.
+The application's source code is publicly available in the
+[TooOldToCode/LibertyKeyboard](https://github.com/TooOldToCode/LibertyKeyboard)
+repository.
+
+---
+
+<a id="polski"></a>
+
 # Instrukcja użytkownika Liberty Keyboard
 
 ## 1. Pierwsze uruchomienie
@@ -217,6 +446,6 @@ wysyłania.
 
 ## 10. Prywatność i kod źródłowy
 
-Pełna [polityka prywatności](privacy-policy.html) opisuje przetwarzanie danych.
+Pełna [polityka prywatności](./privacy-policy.md#polski) opisuje przetwarzanie danych.
 Kod źródłowy aplikacji jest publicznie dostępny w repozytorium
 [TooOldToCode/LibertyKeyboard](https://github.com/TooOldToCode/LibertyKeyboard).
