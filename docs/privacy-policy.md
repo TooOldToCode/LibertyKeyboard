@@ -1,3 +1,7 @@
+[English](#english) | [Polski](#polski)
+
+<a id="english"></a>
+
 # Liberty Keyboard Privacy Policy
 
 **Effective date: July 27, 2026**
@@ -111,6 +115,8 @@ Source code: <https://github.com/TooOldToCode/LibertyKeyboard>
 Privacy inquiries: <https://github.com/TooOldToCode/LibertyKeyboard/issues>
 
 ---
+
+<a id="polski"></a>
 
 # Polityka prywatności Liberty Keyboard
 
