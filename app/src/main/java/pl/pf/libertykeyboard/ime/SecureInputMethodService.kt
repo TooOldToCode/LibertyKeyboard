@@ -26,7 +26,6 @@ import android.widget.TextView
 import android.widget.Toast
 import pl.pf.libertykeyboard.R
 import pl.pf.libertykeyboard.crypto.CryptoEngine
-import pl.pf.libertykeyboard.crypto.CiphertextRegistry
 import pl.pf.libertykeyboard.crypto.CiphertextEnvelope
 import pl.pf.libertykeyboard.crypto.SecretSession
 import pl.pf.libertykeyboard.crypto.DecryptedMessageHistory
@@ -505,7 +504,6 @@ class SecureInputMethodService : InputMethodService() {
             var ciphertext: String? = null
             val active = SecretSession.withSecret { secret -> ciphertext = CryptoEngine.encrypt(chars, secret) }
             if (!active || ciphertext == null) { toast("Brak hasła sesji"); return false }
-            CiphertextRegistry.rememberOutgoing(ciphertext!!)
             connection.beginBatchEdit()
             connection.deleteSurroundingText(chars.size, 0)
             connection.commitText(ciphertext, 1)

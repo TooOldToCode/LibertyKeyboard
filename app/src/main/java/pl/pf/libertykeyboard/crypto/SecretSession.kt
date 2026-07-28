@@ -33,6 +33,5 @@ object SecretSession {
         encryptionEnabled.set(false)
         secret?.fill('\u0000')
         secret = null
-        CiphertextRegistry.clear()
     }
 }
