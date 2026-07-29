@@ -3,54 +3,142 @@ package pl.pf.libertykeyboard
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.provider.Settings
 import android.view.Gravity
+import android.view.View
 import android.widget.Button
+import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ScrollView
 import android.widget.TextView
 
 /** Entry point deliberately contains onboarding only; it never handles a secret. */
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val padding = (24 * resources.displayMetrics.density).toInt()
-        val layout = LinearLayout(this).apply {
+        window.statusBarColor = Color.rgb(2, 18, 62)
+        window.navigationBarColor = Color.rgb(2, 18, 62)
+
+        val root = FrameLayout(this)
+        root.addView(ImageView(this).apply {
+            setImageResource(R.drawable.main_app_art)
+            scaleType = ImageView.ScaleType.CENTER_CROP
+            contentDescription = null
+        }, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+        root.addView(View(this).apply {
+            setBackgroundColor(Color.argb(132, 1, 15, 53))
+        }, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+
+        val content = LinearLayout(this).apply {
             orientation = LinearLayout.VERTICAL
             gravity = Gravity.CENTER_HORIZONTAL
-            setPadding(padding, padding, padding, padding)
+            setPadding(dp(24), dp(10), dp(24), dp(28))
         }
-        layout.addView(TextView(this).apply {
-            text = "Liberty Keyboard\n\nKlawiatura szyfruje lokalnie. Hasło wpisujesz wyłącznie z paska klawiatury; aplikacja go nie zapisuje."
-            textSize = 18f
-        })
-        layout.addView(Button(this).apply {
-            text = "Włącz klawiaturę"
-            setOnClickListener { startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)) }
-        })
-        layout.addView(Button(this).apply {
-            text = "Włącz podgląd odszyfrowanych wiadomości"
-            setOnClickListener { showAccessibilityDisclosure() }
-        })
-        layout.addView(Button(this).apply {
-            text = "Polityka prywatności"
-            setOnClickListener {
+
+        content.addView(LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            gravity = Gravity.CENTER
+            setPadding(dp(20), dp(10), dp(20), dp(10))
+            background = roundedBackground(Color.argb(118, 2, 25, 79), dp(16).toFloat())
+
+            addView(TextView(this@MainActivity).apply {
+                text = "LIBERTY KEYBOARD"
+                textSize = 27f
+                typeface = Typeface.DEFAULT_BOLD
+                gravity = Gravity.CENTER
+                setTextColor(Color.rgb(255, 193, 7))
+                letterSpacing = 0.08f
+            })
+        }, fullWidthParams())
+
+        content.addView(View(this), LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            dp(300)
+        ))
+
+        content.addView(actionButton("Włącz klawiaturę", primary = true) {
+            startActivity(Intent(Settings.ACTION_INPUT_METHOD_SETTINGS))
+        }, fullWidthParams(bottomMargin = dp(10)))
+        content.addView(actionButton("Włącz podgląd odszyfrowanych wiadomości") {
+            showAccessibilityDisclosure()
+        }, fullWidthParams(bottomMargin = dp(10)))
+        content.addView(actionButton("Polityka prywatności") {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)))
-            }
-        })
-        layout.addView(Button(this).apply {
-            text = "Instrukcja użytkownika"
-            setOnClickListener {
+        }, fullWidthParams(bottomMargin = dp(10)))
+        content.addView(actionButton("Instrukcja użytkownika") {
                 startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(USER_GUIDE_URL)))
-            }
-        })
-        layout.addView(Button(this).apply {
-            text = "O aplikacji"
-            setOnClickListener { showAbout() }
-        })
-        setContentView(layout)
+        }, fullWidthParams(bottomMargin = dp(10)))
+        content.addView(actionButton("O aplikacji") {
+            showAbout()
+        }, fullWidthParams())
+
+        root.addView(ScrollView(this).apply {
+            isFillViewport = true
+            clipToPadding = false
+            addView(content, FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.WRAP_CONTENT
+            ))
+        }, FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.MATCH_PARENT
+        ))
+        setContentView(root)
     }
+
+    private fun actionButton(
+        label: String,
+        primary: Boolean = false,
+        action: () -> Unit
+    ) = Button(this).apply {
+        text = label
+        textSize = 15f
+        isAllCaps = false
+        typeface = Typeface.DEFAULT_BOLD
+        setTextColor(if (primary) Color.rgb(2, 25, 79) else Color.WHITE)
+        background = roundedBackground(
+            if (primary) Color.rgb(255, 193, 7) else Color.argb(235, 3, 43, 116),
+            dp(14).toFloat(),
+            if (primary) Color.rgb(255, 220, 92) else Color.argb(210, 255, 193, 7)
+        )
+        minHeight = dp(54)
+        setPadding(dp(16), dp(8), dp(16), dp(8))
+        elevation = dp(4).toFloat()
+        setOnClickListener { action() }
+    }
+
+    private fun roundedBackground(
+        color: Int,
+        radius: Float,
+        strokeColor: Int? = null
+    ) = GradientDrawable().apply {
+        shape = GradientDrawable.RECTANGLE
+        setColor(color)
+        cornerRadius = radius
+        strokeColor?.let { setStroke(dp(1), it) }
+    }
+
+    private fun fullWidthParams(bottomMargin: Int = 0) =
+        LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        ).apply {
+            this.bottomMargin = bottomMargin
+        }
+
+    private fun dp(value: Int) = (value * resources.displayMetrics.density).toInt()
 
     private fun showAccessibilityDisclosure() {
         AlertDialog.Builder(this)

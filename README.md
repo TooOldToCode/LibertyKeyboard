@@ -10,17 +10,17 @@ Because privacy doesn't begin when you press Send. It begins long before that.
 
 ## Download
 
-[Download Liberty Keyboard 1.0.0 (signed APK)](releases/LibertyKeyboard-1.0.0.apk?raw=1)
+[Download Liberty Keyboard 1.0.1 (signed APK)](releases/LibertyKeyboard-1.0.1.apk?raw=1)
 
 APK SHA-256:
-`2692a32398748748ce616e06ea575ae2f1867d4ab76edf653c73151bf7078c3b`
+`fb902de0185e433faaf1d47c82d606e5a90ec8a4392533c4fc989f2b0c4425c3`
 
 Signing certificate SHA-256:
 `c37024bf7ebda04ea9f8a1ecba99f885445e4330638ac9b273acf3f7b20f07f8`
 
 The APK is signed by `CN=TooOldToCode, OU=Liberty Keyboard, C=PL`. Verify the
 certificate fingerprint before installation or update. The checksum is also
-available as a [separate file](releases/LibertyKeyboard-1.0.0.apk.sha256).
+available as a [separate file](releases/LibertyKeyboard-1.0.1.apk.sha256).
 
 ## Build it yourself
 
