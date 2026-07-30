@@ -67,4 +67,8 @@ Wszelkie użyte w opisie nazwy, określenia i odniesienia polityczne stanowią w
 
 Satyra od stuleci pozostaje elementem wolnego społeczeństwa, sposobem wyrażania poglądów oraz jedną z form korzystania z wolności słowa. Dlatego również tutaj jest świadomie wykorzystanym środkiem wyrazu.
 
+Więcej o CSAR (Chat Control 2.0)
+Wprowadzenie do tematu: [Niebezpiecznik — wyjaśnienie Chat Control 1.0 i 2.0](https://niebezpiecznik.pl/post/chat-control-politycy-znow-chca-czytac-nasze-prywatne-wiadomosci/)
+oraz [Demagog — omówienie projektu CSAR i obaw o prywatność](https://demagog.org.pl/analizy_i_raporty/chat-control-to-koniec-prywatnosci-sprawdzamy-czy-te-obawy-maja-podstawy/).
+
 **Ręce precz od naszej korespondencji. Ręce precz od wolności słowa. Ręce precz od demokracji.**

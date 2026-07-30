@@ -118,4 +118,8 @@ The political references used throughout this description are expressions of the
 
 Satire has always been part of free societies. It is a legitimate way to question authority, criticize public policy, and participate in democratic debate.
 
+More about CSAR (Chat Control 2.0)
+Introduction to the topic: [Council of the European Union — current status and legislative timeline](https://www.consilium.europa.eu/en/policies/prevent-child-sexual-abuse-online/)
+and [TechCrunch — explanation of the proposal and privacy concerns](https://techcrunch.com/2024/10/12/chat-control-the-eus-controversial-csam-scanning-legal-proposal-explained/).
+
 **Hands off our private correspondence. Hands off freedom of speech. Hands off democracy.**
